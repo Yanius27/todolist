@@ -8,37 +8,39 @@
   <title>todolist</title>
 </head>
 <body>
-<script src="js/todolist.js"></script>
-<script>console.log('second');</script>
 
   <div class="content">
     <div class="app">
       <label class="input">
-        <input type="text" class="task-input" placeholder="Enter task...">
-        <button type="submit" class="add-button">Add</button>
+        <input type="text" class="task-input" id="input" placeholder="Enter task...">
+        <button type="submit" class="add-button" id="add">Add</button>
       </label>
       
-      <ul class="task-list">
+      <ul class="task-list" id="taskList">
+        
         <div class="task-block">
-          <li class="task">I wiil wake up at 8 in the morning</li>
+          
           <button type="reset" class="button-reset">
             <span class="hidden">Кнопка для удаления задачи</span>
           </button>
         </div>
+
         <div class="task-block">
-          <li class="task">I will practice html for 1 hour</li>
+          
           <button type="reset" class="button-reset">
             <span class="hidden">Кнопка для удаления задачи</span>
           </button>
         </div>
+
         <div class="task-block">
-          <li class="task">I will give time for 2 hours css</li>
+          
           <button type="reset" class="button-reset">
             <span class="hidden">Кнопка для удаления задачи</span>
           </button>
         </div>
+
         <div class="task-block">
-          <li class="task">Then i will have breakfast</li>
+          
           <button type="reset" class="button-reset">
             <span class="hidden">Кнопка для удаления задачи</span>
           </button>
@@ -46,5 +48,8 @@
       </ul>
     </div>
   </div>
+
+  <script src="js/todolist.js"></script>
+
 </body>
 </html>
