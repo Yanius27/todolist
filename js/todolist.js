@@ -1,13 +1,18 @@
-let values = [];
+const tasks = [];
 
-document.getElementById('add').addEventListener('click', () => {
-  let val = document.getElementById('input').value;
-  values.push(val);
+const liActual = (val) => {
+  return `<li>${val}</li>`;
+}
 
-  const taskLi = values.forEach(v => {
-    const li = document.createElement('li');
-    li.textContent = v;
-    document.getElementById('taskList').appendChild(li);
-  });
+const renderTaskList = () => {
+  document.getElementById('taskList').innerHTML = tasks.map(liActual).join('');
+}
 
-});
+
+const saveTask = () => {
+  const field = document.getElementById('input').value;
+  tasks.push(field);
+  renderTaskList();
+}
+
+document.getElementById('add').addEventListener('click', saveTask);
