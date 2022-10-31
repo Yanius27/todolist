@@ -1,7 +1,7 @@
 const tasks = [];
 
 const liActual = (val) => {
-  return `<li>${val}</li>`;
+  return `<li class="task-block">${val}</li>`;
 }
 
 const renderTaskList = () => {
