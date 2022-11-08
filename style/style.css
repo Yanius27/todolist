@@ -48,6 +48,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   padding-left: 5px;
+  padding-right: 5px;
   flex-grow: 1;
   
   font-size: 18px;
@@ -83,7 +84,8 @@
 }
 
 .task-block {
-  display: inline-block;
+  display: flex;
+  justify-content: space-between;
   border: 2px solid black;
   border-radius: 5px;
   width: 100%;
@@ -94,15 +96,20 @@
 
   gap: 20px;
 
-  display: flex;
-  justify-content: space-between;
   align-items: center;
 
   background-color: #ADD8E6;
 }
 
+
 .task-block:nth-child(1) {
   margin-top: 20px;
+}
+
+.task-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .button-reset {
