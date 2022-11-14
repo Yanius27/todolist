@@ -10,6 +10,14 @@ const startUp = () => {
       });
       renderTaskList();
     }
+    let checkBoxId = event.target.getAttribute('checkbox-id');
+    if(checkBoxId) {
+      tasks = tasks.map((task) => {
+        task.checkBoxStatus = event.target.checked;
+        return task;
+      });
+      renderTaskList();
+    }
   });
 }
 
@@ -21,7 +29,7 @@ const taskActual = (val) => {
       <button type="reset" class="button-reset" delete-task-id=${val.id}>
         <span class="hidden">Кнопка для удаления задачи</span>
       </button>
-      <input type="checkbox" class="checkbox">
+      <input type="checkbox" class="checkbox" checkbox-id=${val.id} ${val.checkBoxStatus ? 'checked' : ''}>
       <span class="fake-checkbox"></span>
     </div>
   </div>`;
@@ -43,6 +51,7 @@ const saveTaskAndDateToObject = () => {
   field.task = document.getElementById('input').value;
   field.date = new Date().toLocaleDateString();
   field.id = createId();
+  field.checkBoxStatus = false;
   addToMassiv(field);
 }
 
