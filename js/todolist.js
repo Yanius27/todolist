@@ -1,13 +1,15 @@
 let tasks = [];
 
 const startUp = () => {
-  document.getElementById('add').addEventListener('click', saveTaskAndDateToObject);
+  document.getElementById('add').addEventListener('click', saveTaskAndDateToObject, /* clearInput */);
   document.getElementById('taskList').addEventListener('click', (event) => {
-    let id = event.target.getAttribute('data-task-id');
-    tasks = tasks.filter((task) => {
+    let id = event.target.getAttribute('delete-task-id');
+    if(id) {
+      tasks = tasks.filter((task) => {
       return task.id != id;
-    });
-    renderTaskList();
+      });
+      renderTaskList();
+    }
   });
 }
 
@@ -16,9 +18,11 @@ const taskActual = (val) => {
     <div class="task">${val.task}</div>
     <div class="task-content">
       <div class="date">${val.date}</div>
-      <button type="reset" class="button-reset" data-task-id=${val.id}>
+      <button type="reset" class="button-reset" delete-task-id=${val.id}>
         <span class="hidden">Кнопка для удаления задачи</span>
       </button>
+      <input type="checkbox" class="checkbox">
+      <span class="fake-checkbox"></span>
     </div>
   </div>`;
 }
@@ -41,5 +45,9 @@ const saveTaskAndDateToObject = () => {
   field.id = createId();
   addToMassiv(field);
 }
+
+// const clearInput = () => {
+//   document.getElementById('input').value = "";
+// }
 
 startUp();

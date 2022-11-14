@@ -134,3 +134,23 @@
     top: 0;
     right: 0;
 }
+
+.checkbox {
+  display: none;
+}
+
+.fake-checkbox::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+
+  background-image: url(../png/pngwing.com.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: white;
+}
+
+.checkbox:checked + .fake-checkbox::before {
+  background-image: url(../png/pngwing.com\ \(1\).png);
+}
