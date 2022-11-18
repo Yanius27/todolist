@@ -9,6 +9,7 @@ const startUp = () => {
       return task.id != id;
       });
       console.log(tasks);
+      saveLocalStorage();
       renderTaskList();
     }
     let checkBoxId = event.target.getAttribute('checkbox-id');
@@ -20,6 +21,7 @@ const startUp = () => {
         }
         else return task;
       });
+      saveLocalStorage();
       console.log(tasks);
       renderTaskList();
     }
@@ -51,7 +53,9 @@ const addToMassiv = (f) => {
   renderTaskList();
 }
 
-const createId = () => Math.random();
+const createId = () => {
+  return `${Math.round(Math.random() * 10000)}-${Math.round(Math.random() * 10000)}-${Math.round(Math.random() * 10000)}`;
+}
 
 const saveTaskAndDateToObject = () => {
   const field = {};
@@ -60,6 +64,14 @@ const saveTaskAndDateToObject = () => {
   field.id = createId();
   field.checkBoxStatus = false;
   addToMassiv(field);
+}
+
+const saveLocalStorage = () => {
+  const state = {
+    tasks: [],
+  }
+
+  localStorage.setItem('data', state);
 }
 
 // const clearInput = () => {
