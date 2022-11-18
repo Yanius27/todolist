@@ -1,20 +1,22 @@
-let tasks = [];
+const state = {
+  tasks: [],
+};
 
 const startUp = () => {
   document.getElementById('add').addEventListener('click', saveTaskAndDateToObject, /* clearInput */);
   document.getElementById('taskList').addEventListener('click', (event) => {
     let id = event.target.getAttribute('delete-task-id');
     if(id) {
-      tasks = tasks.filter((task) => {
+      state.tasks = state.tasks.filter((task) => {
       return task.id != id;
       });
-      console.log(tasks);
+      console.log(state.tasks);
       saveLocalStorage();
       renderTaskList();
     }
     let checkBoxId = event.target.getAttribute('checkbox-id');
     if(checkBoxId) {
-      tasks = tasks.map((task) => {
+      state.tasks = state.tasks.map((task) => {
         if(task.id == checkBoxId) {
           task.checkBoxStatus = event.target.checked;
           return task;
@@ -22,7 +24,7 @@ const startUp = () => {
         else return task;
       });
       saveLocalStorage();
-      console.log(tasks);
+      console.log(state.tasks);
       renderTaskList();
     }
   });
@@ -45,11 +47,11 @@ const taskActual = (val) => {
 }
 
 const renderTaskList = () => {
-  document.getElementById('taskList').innerHTML = tasks.map(taskActual).join('');
+  document.getElementById('taskList').innerHTML = state.tasks.map(taskActual).join('');
 }
 
 const addToMassiv = (f) => {
-  tasks.push(f);
+  state.tasks.push(f);
   renderTaskList();
 }
 
@@ -67,11 +69,12 @@ const saveTaskAndDateToObject = () => {
 }
 
 const saveLocalStorage = () => {
-  const state = {
-    tasks: [],
-  }
+  const stringTask = JSON.stringify(state);
+  localStorage.setItem('data', stringTask);
+}
 
-  localStorage.setItem('data', state);
+const initLocalStorage = () => {
+  const parsJson = JSON.parse(localStorage.getItem('data'));
 }
 
 // const clearInput = () => {
