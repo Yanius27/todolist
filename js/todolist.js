@@ -1,34 +1,41 @@
-const state = {
+let state = {
   tasks: [],
 };
 
 const startUp = () => {
+  initState();
+
   document.getElementById('add').addEventListener('click', saveTaskAndDateToObject, /* clearInput */);
-  document.getElementById('taskList').addEventListener('click', (event) => {
-    let id = event.target.getAttribute('delete-task-id');
-    if(id) {
-      state.tasks = state.tasks.filter((task) => {
-      return task.id != id;
-      });
-      console.log(state.tasks);
-      saveLocalStorage();
-      renderTaskList();
-    }
-    let checkBoxId = event.target.getAttribute('checkbox-id');
-    if(checkBoxId) {
-      state.tasks = state.tasks.map((task) => {
-        if(task.id == checkBoxId) {
-          task.checkBoxStatus = event.target.checked;
-          return task;
-        }
-        else return task;
-      });
-      saveLocalStorage();
-      console.log(state.tasks);
-      renderTaskList();
-    }
-  });
+  document.getElementById('taskList').addEventListener('click', deleteEvent('click'), checkEvent());
 }
+
+const deleteEvent = (event) => {
+  let id = event.target.getAttribute('delete-task-id');
+  if(id) {
+    state.tasks = state.tasks.filter((task) => {
+      return task.id != id;
+    });
+    console.log(state.tasks);
+    saveLocalStorage();
+    renderTaskList();
+  }
+};
+
+const checkEvent = (event) => {
+  let checkBoxId = event.target.getAttribute('checkbox-id');
+  if(checkBoxId) {
+    state.tasks = state.tasks.map((task) => {
+      if(task.id == checkBoxId) {
+        task.checkBoxStatus = event.target.checked;
+        return task;
+      }
+      else return task;
+    });
+    saveLocalStorage();
+    console.log(state.tasks);
+    renderTaskList();
+  };
+};
 
 const taskActual = (val) => {
   return `<div class="task-block">
@@ -50,8 +57,9 @@ const renderTaskList = () => {
   document.getElementById('taskList').innerHTML = state.tasks.map(taskActual).join('');
 }
 
-const addToMassiv = (f) => {
+const addToArray = (f) => {
   state.tasks.push(f);
+  saveLocalStorage();
   renderTaskList();
 }
 
@@ -65,7 +73,7 @@ const saveTaskAndDateToObject = () => {
   field.date = new Date().toLocaleDateString();
   field.id = createId();
   field.checkBoxStatus = false;
-  addToMassiv(field);
+  addToArray(field);
 }
 
 const saveLocalStorage = () => {
@@ -73,8 +81,9 @@ const saveLocalStorage = () => {
   localStorage.setItem('data', stringTask);
 }
 
-const initLocalStorage = () => {
-  const parsJson = JSON.parse(localStorage.getItem('data'));
+const initState = () => {
+  state = JSON.parse(localStorage.getItem('data'));
+  renderTaskList();
 }
 
 // const clearInput = () => {
