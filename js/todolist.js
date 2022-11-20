@@ -2,40 +2,11 @@ let state = {
   tasks: [],
 };
 
-const startUp = () => {
-  initState();
 
-  document.getElementById('add').addEventListener('click', saveTaskAndDateToObject, /* clearInput */);
-  document.getElementById('taskList').addEventListener('click', deleteEvent('click'), checkEvent());
+const saveLocalStorage = () => {
+  const stringTask = JSON.stringify(state);
+  localStorage.setItem('data', stringTask);
 }
-
-const deleteEvent = (event) => {
-  let id = event.target.getAttribute('delete-task-id');
-  if(id) {
-    state.tasks = state.tasks.filter((task) => {
-      return task.id != id;
-    });
-    console.log(state.tasks);
-    saveLocalStorage();
-    renderTaskList();
-  }
-};
-
-const checkEvent = (event) => {
-  let checkBoxId = event.target.getAttribute('checkbox-id');
-  if(checkBoxId) {
-    state.tasks = state.tasks.map((task) => {
-      if(task.id == checkBoxId) {
-        task.checkBoxStatus = event.target.checked;
-        return task;
-      }
-      else return task;
-    });
-    saveLocalStorage();
-    console.log(state.tasks);
-    renderTaskList();
-  };
-};
 
 const taskActual = (val) => {
   return `<div class="task-block">
@@ -57,14 +28,43 @@ const renderTaskList = () => {
   document.getElementById('taskList').innerHTML = state.tasks.map(taskActual).join('');
 }
 
+const deleteOrCheck = (event) => {
+  let id = event.target.getAttribute('delete-task-id');
+  if(id) {
+    state.tasks = state.tasks.filter((task) => {
+    return task.id != id;
+    });
+    console.log(state.tasks);
+    saveLocalStorage();
+    renderTaskList();
+  };
+  let checkBoxId = event.target.getAttribute('checkbox-id');
+  if(checkBoxId) {
+    state.tasks = state.tasks.map((task) => {
+      if(task.id == checkBoxId) {
+        task.checkBoxStatus = event.target.checked;
+        return task;
+      }
+      else return task;
+    });
+    saveLocalStorage();
+    console.log(state.tasks);
+    renderTaskList();
+  };
+}
+
+const createId = () => {
+  return `${Math.round(Math.random() * 10000)}-${Math.round(Math.random() * 10000)}-${Math.round(Math.random() * 10000)}`;
+}
+
 const addToArray = (f) => {
   state.tasks.push(f);
   saveLocalStorage();
   renderTaskList();
 }
 
-const createId = () => {
-  return `${Math.round(Math.random() * 10000)}-${Math.round(Math.random() * 10000)}-${Math.round(Math.random() * 10000)}`;
+const clearInput = () => {
+  document.getElementById('input').value = "";
 }
 
 const saveTaskAndDateToObject = () => {
@@ -74,11 +74,7 @@ const saveTaskAndDateToObject = () => {
   field.id = createId();
   field.checkBoxStatus = false;
   addToArray(field);
-}
-
-const saveLocalStorage = () => {
-  const stringTask = JSON.stringify(state);
-  localStorage.setItem('data', stringTask);
+  clearInput();
 }
 
 const initState = () => {
@@ -86,8 +82,11 @@ const initState = () => {
   renderTaskList();
 }
 
-// const clearInput = () => {
-//   document.getElementById('input').value = "";
-// }
+const startUp = () => {
+  initState();
+
+  document.getElementById('add').addEventListener('click', saveTaskAndDateToObject);
+  document.getElementById('taskList').addEventListener('click', deleteOrCheck);
+}
 
 startUp();
