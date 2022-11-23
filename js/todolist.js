@@ -28,6 +28,13 @@ const renderTaskList = () => {
   document.getElementById('taskList').innerHTML = state.tasks.map(taskActual).join('');
 }
 
+const sortTasks = (a, b) => {
+  const aNumber = a.checkBoxStatus ? 1 : 0;
+  const bNumber = b.checkBoxStatus ? 1 : 0;
+
+  return aNumber - bNumber;
+}
+
 const deleteOrCheck = (event) => {
   let id = event.target.getAttribute('delete-task-id');
   if(id) {
@@ -47,6 +54,7 @@ const deleteOrCheck = (event) => {
       }
       else return task;
     });
+    state.tasks = state.tasks.sort(sortTasks);
     saveLocalStorage();
     console.log(state.tasks);
     renderTaskList();
