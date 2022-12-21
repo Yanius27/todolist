@@ -1,12 +1,13 @@
 let state = {
   tasks: [],
 };
-
+//create an object
 
 const saveLocalStorage = () => {
   const stringTask = JSON.stringify(state);
   localStorage.setItem('data', stringTask);
 }
+//convert object to string and add data to storage
 
 const taskActual = (val) => {
   return `<div class="task-block">
@@ -23,10 +24,12 @@ const taskActual = (val) => {
     </div>
   </div>`;
 }
+//adding valid layout
 
 const renderTaskList = () => {
   document.getElementById('taskList').innerHTML = state.tasks.map(taskActual).join('');
 }
+//rendering of actual tasks
 
 const sortTasks = (a, b) => {
   const aNumber = a.checkBoxStatus ? 1 : 0;
@@ -34,6 +37,7 @@ const sortTasks = (a, b) => {
 
   return aNumber - bNumber;
 }
+//task sorting
 
 const deleteOrCheck = (event) => {
   let id = event.target.getAttribute('delete-task-id');
@@ -41,7 +45,6 @@ const deleteOrCheck = (event) => {
     state.tasks = state.tasks.filter((task) => {
     return task.id != id;
     });
-    console.log(state.tasks);
     saveLocalStorage();
     renderTaskList();
   };
@@ -56,24 +59,27 @@ const deleteOrCheck = (event) => {
     });
     state.tasks = state.tasks.sort(sortTasks);
     saveLocalStorage();
-    console.log(state.tasks);
     renderTaskList();
   };
 }
+//operation of the delete button and checkbox
 
 const createId = () => {
   return `${Math.round(Math.random() * 10000)}-${Math.round(Math.random() * 10000)}-${Math.round(Math.random() * 10000)}`;
 }
+//creating a unique id
 
 const addToArray = (f) => {
   state.tasks.push(f);
   saveLocalStorage();
   renderTaskList();
 }
+//adding an object to an array, add data to storage and render
 
 const clearInput = () => {
   document.getElementById('input').value = "";
 }
+//clearing the input field
 
 const saveTaskAndDateToObject = () => {
   const field = {};
@@ -84,11 +90,13 @@ const saveTaskAndDateToObject = () => {
   addToArray(field);
   clearInput();
 }
+//creating an object and his fields, adding to the array, clearing the input field
 
 const initState = () => {
   state = JSON.parse(localStorage.getItem('data'));
   renderTaskList();
 }
+//initialization of stored data, converting to an object and rendering
 
 const startUp = () => {
   initState();
@@ -96,5 +104,7 @@ const startUp = () => {
   document.getElementById('add').addEventListener('click', saveTaskAndDateToObject);
   document.getElementById('taskList').addEventListener('click', deleteOrCheck);
 }
+//main function declaration
 
 startUp();
+//main function call
