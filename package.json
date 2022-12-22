@@ -1,0 +1,22 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "",
+  "source": "./src/index.html",
+  "scripts": {
+    "start": "parcel"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yanius27/todolist.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yanius27/todolist/issues"
+  },
+  "homepage": "https://github.com/Yanius27/todolist#readme",
+  "devDependencies": {
+    "parcel": "^2.8.2"
+  }
+}
