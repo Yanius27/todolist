@@ -1,16 +1,16 @@
-export const onApp = () => {
-  let state = {
+class OnApp {
+  state = {
     tasks: [],
   };
   //create an object
   
-  const saveLocalStorage = () => {
-    const stringTask = JSON.stringify(state);
+  saveLocalStorage = () => {
+    stringTask = JSON.stringify(this.state);
     localStorage.setItem('data', stringTask);
   }
   //convert object to string and add data to storage
   
-  const taskActual = (val) => {
+  taskActual = (val) => {
     return `<div class="task-block">
       <div class="task">${val.task}</div>
       <div class="task-content">
@@ -27,12 +27,12 @@ export const onApp = () => {
   }
   //adding valid layout
   
-  const renderTaskList = () => {
-    document.getElementById('taskList').innerHTML = state.tasks.map(taskActual).join('');
+  renderTaskList = () => {
+    document.getElementById('taskList').innerHTML = this.state.tasks.map(this.taskActual).join('');
   }
   //rendering of actual tasks
   
-  const sortTasks = (a, b) => {
+  sortTasks = (a, b) => {
     const aNumber = a.checkBoxStatus ? 1 : 0;
     const bNumber = b.checkBoxStatus ? 1 : 0;
   
@@ -40,49 +40,49 @@ export const onApp = () => {
   }
   //task sorting
   
-  const deleteOrCheck = (event) => {
+  deleteOrCheck = (event) => {
     let id = event.target.getAttribute('delete-task-id');
     if(id) {
-      state.tasks = state.tasks.filter((task) => {
+      this.state.tasks = this.state.tasks.filter((task) => {
       return task.id != id;
       });
-      saveLocalStorage();
-      renderTaskList();
+      this.saveLocalStorage();
+      this.renderTaskList();
     };
-    let checkBoxId = event.target.getAttribute('checkbox-id');
-    if(checkBoxId) {
-      state.tasks = state.tasks.map((task) => {
-        if(task.id == checkBoxId) {
+    checkBoxId = event.target.getAttribute('checkbox-id');
+    if(this.checkBoxId) {
+      this.state.tasks = this.state.tasks.map((task) => {
+        if(task.id == this.checkBoxId) {
           task.checkBoxStatus = event.target.checked;
           return task;
         }
         else return task;
       });
-      state.tasks = state.tasks.sort(sortTasks);
-      saveLocalStorage();
-      renderTaskList();
+      this.state.tasks = this.state.tasks.sort(this.sortTasks);
+      this.saveLocalStorage();
+      this.renderTaskList();
     };
   }
   //operation of the delete button and checkbox
   
-  const createId = () => {
+  createId = () => {
     return `${Math.round(Math.random() * 10000)}-${Math.round(Math.random() * 10000)}-${Math.round(Math.random() * 10000)}`;
   }
   //creating a unique id
   
-  const addToArray = (f) => {
-    state.tasks.push(f);
-    saveLocalStorage();
-    renderTaskList();
+  addToArray = (f) => {
+    this.state.tasks.push(f);
+    this.saveLocalStorage();
+    this.renderTaskList();
   }
   //adding an object to an array, add data to storage and render
   
-  const clearInput = () => {
+  clearInput = () => {
     document.getElementById('input').value = "";
   }
   //clearing the input field
   
-  const saveTaskAndDateToObject = () => {
+  saveTaskAndDateToObject = () => {
     const field = {};
     field.task = document.getElementById('input').value;
     field.date = new Date().toLocaleDateString();
@@ -93,25 +93,24 @@ export const onApp = () => {
   }
   //creating an object and his fields, adding to the array, clearing the input field
   
-  const initState = () => {
+  initState = () => {
     const localState = JSON.parse(localStorage.getItem('data'));
   
     if(localState) {
-      state = localState;
+      this.state = localState;
     }
   
-    renderTaskList();
+    this.renderTaskList();
   }
   //initialization of stored data, converting to an object and rendering
   
-  const startUp = () => {
-    initState();
+  startUp = () => {
+    this.initState();
   
-    document.getElementById('add').addEventListener('click', saveTaskAndDateToObject);
-    document.getElementById('taskList').addEventListener('click', deleteOrCheck);
+    document.getElementById('add').addEventListener('click', this.saveTaskAndDateToObject);
+    document.getElementById('taskList').addEventListener('click', this.deleteOrCheck);
   }
-  //main function declaration
-  
-  startUp();
-  //main function call  
+  //main function declaration 
 };
+
+export const app = new OnApp();

@@ -1,3 +1,3 @@
-import { onApp } from "./application";
+import { app } from "./application";
 
-onApp();
+startUp();
