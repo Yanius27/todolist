@@ -5,7 +5,7 @@ class OnApp {
   //create an object
   
   saveLocalStorage = () => {
-    stringTask = JSON.stringify(this.state);
+    const stringTask = JSON.stringify(this.state);
     localStorage.setItem('data', stringTask);
   }
   //convert object to string and add data to storage
@@ -49,10 +49,10 @@ class OnApp {
       this.saveLocalStorage();
       this.renderTaskList();
     };
-    checkBoxId = event.target.getAttribute('checkbox-id');
-    if(this.checkBoxId) {
+    const checkBoxId = event.target.getAttribute('checkbox-id');
+    if(checkBoxId) {
       this.state.tasks = this.state.tasks.map((task) => {
-        if(task.id == this.checkBoxId) {
+        if(task.id == checkBoxId) {
           task.checkBoxStatus = event.target.checked;
           return task;
         }
@@ -86,10 +86,10 @@ class OnApp {
     const field = {};
     field.task = document.getElementById('input').value;
     field.date = new Date().toLocaleDateString();
-    field.id = createId();
+    field.id = this.createId();
     field.checkBoxStatus = false;
-    addToArray(field);
-    clearInput();
+    this.addToArray(field);
+    this.clearInput();
   }
   //creating an object and his fields, adding to the array, clearing the input field
   

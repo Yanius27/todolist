@@ -1,3 +1,3 @@
 import { app } from "./application";
 
-startUp();
+app.startUp();
